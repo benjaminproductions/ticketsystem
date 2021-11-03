@@ -25,9 +25,18 @@
                 <button type="button" class="btn btn-secondary">Zurück</button>
             </a>
 
-            <a href="{{ route('delete', ['id' => $ticket->id]) }}">
-                <button type="button" class="btn btn-danger">Löschen</button>
-            </a>
+            <button type="button" class="btn btn-danger" onclick="deleteTicket(event)">Löschen</button>
         </div>
     </footer>
+@endsection
+@section('javascript')
+    <script>
+    function deleteTicket() {
+        if (confirm("Willst du dieses Ticket wirklich löschen?")) {
+            $.get("{{ route('delete', ['id' => $ticket->id]) }}", function () {
+                window.location.href = "{{ route('index') }}"
+                })
+        }
+    }
+    </script>
 @endsection
