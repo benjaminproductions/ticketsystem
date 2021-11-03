@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Ticket;
 use Illuminate\Http\Request;
-use function PHPUnit\Framework\returnArgument;
 
 class TicketController extends Controller
 {
@@ -29,6 +28,10 @@ class TicketController extends Controller
         $name = $request->input('name');
         $title = $request->input('title');
         $content = $request->input('content');
+
+        if (empty($name)){
+            $name =  'anonym';
+        }
 
         $ticket = Ticket::create([
             'user_created' => $name,

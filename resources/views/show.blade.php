@@ -4,18 +4,28 @@
 @endsection
 @section('content')
     <div class="center">
-        <h5 class="padding">{{ $ticket->title }}</h5>
+        <b>Titel: </b>
     </div>
-
-    <div class="center padding">
+    <div class="center" style="font-size: x-large">
+        {{ $ticket->title }}
+    </div>
+    <br>
+    <div class="center">
         <b>Beschreibung:</b>
-        {{ $ticket->content }}
+    </div>
+    <div class="center">
+        <div class="description">
+            {{ $ticket->content }}
+        </div>
     </div>
 
     <footer>
         <div class="center">
-            <a href="{{ route('delete', ['id' => $ticket->id]) }}">
+            <a href="{{ route('index') }}">
+                <button type="button" class="btn btn-secondary">Zurück</button>
+            </a>
 
+            <a href="{{ route('delete', ['id' => $ticket->id]) }}">
                 <button type="button" class="btn btn-danger">Löschen</button>
             </a>
         </div>
