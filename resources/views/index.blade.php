@@ -1,5 +1,9 @@
 @extends('layout')
 @section('content')
+    <?php
+    use Illuminate\Support\Carbon;
+    ?>
+
     <div class="center">
         @if(!$tickets->isEmpty())
             <table>
@@ -14,6 +18,11 @@
                             <b>Titel</b>
                         </div>
                     </td>
+                    <td class="padding" style="width: 200px">
+                        <div class="center">
+                            <b>Datum</b>
+                        </div>
+                    </td>
                     <td class="padding" style="width: 200px"></td>
                 </tr>
                 @foreach($tickets as $ticket)
@@ -26,6 +35,11 @@
                         <td class="padding">
                             <div class="center">
                                 {{ $ticket->title }}
+                            </div>
+                        </td>
+                        <td class="padding">
+                            <div class="center">
+                                {{ Carbon::parse($ticket->created_date)->setTimezone('Europe/Berlin')->format('H:i d.m.Y') }}
                             </div>
                         </td>
                         <td class="padding">
