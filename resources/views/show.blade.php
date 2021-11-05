@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <div class="center">
-        <b>Titel: </b>
+        <b>Titel:</b>
     </div>
     <div class="center" style="font-size: x-large">
         {{ $ticket->title }}
@@ -31,12 +31,12 @@
 @endsection
 @section('javascript')
     <script>
-    function deleteTicket() {
-        if (confirm("Willst du dieses Ticket wirklich löschen?")) {
-            $.get("{{ route('delete', ['id' => $ticket->id]) }}", function () {
-                window.location.href = "{{ route('index') }}"
+        function deleteTicket() {
+            if (confirm("Willst du dieses Ticket wirklich löschen?")) {
+                $.get("{{ route('delete', ['id' => $ticket->id]) }}", function () {
+                    window.location.href = "{{ route('index') }}"
                 })
+            }
         }
-    }
     </script>
 @endsection

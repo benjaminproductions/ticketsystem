@@ -30,7 +30,7 @@ class TicketController extends Controller
         $content = $request->input('content');
 
         if (empty($name)){
-            $name =  'anonym';
+            $name =  'Anonym';
         }
 
         $ticket = Ticket::create([
@@ -46,7 +46,5 @@ class TicketController extends Controller
     {
         $ticket = Ticket::where('id', $id);
         $ticket->delete();
-
-        return redirect(route('index'));
     }
 }
