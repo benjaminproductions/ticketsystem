@@ -11,8 +11,8 @@ class AddCommentsTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->string('user_created');
-            $table->string('content');
             $table->string('ticket_id');
+            $table->string('content');
             $table->softDeletes();
             $table->timestamps();
         });

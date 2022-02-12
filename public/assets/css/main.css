@@ -11,6 +11,18 @@ footer {
     height: 2.5rem;
 }
 
+textarea {
+    height: 180px;
+}
+
+hr {
+    box-shadow: 0 5px 5px white;
+}
+
+.title_font {
+    font-size: x-large;
+}
+
 .center {
     display: flex;
     justify-content: center;
@@ -34,4 +46,11 @@ footer {
     width: 800px;
     word-break: break-word;
     text-align: center;
+}
+
+.comment-border {
+    border-radius: 25px;
+    border: 2px solid white;
+    padding: 20px;
+    width: 75%;
 }

@@ -2,23 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attachments;
 use App\Models\Comments;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
     public function index()
     {
+        if (empty(Auth::user())) {
+            return redirect(route('login'));
+        }
+
         $tickets = Ticket::get();
+
         return view('index', compact('tickets'));
     }
 
     public function show(Ticket $ticket)
     {
         $comments = Comments::where('ticket_id', $ticket->id)->get();
+        $files = Attachments::where('ticket_id', $ticket->id)->get();
 
-        return view('show', compact('ticket', 'comments'));
+        return view('show', compact('ticket', 'comments', 'files'));
     }
 
     public function create()
@@ -28,26 +36,20 @@ class TicketController extends Controller
 
     public function store(Request $request)
     {
-        $name = $request->input('name');
-        $title = $request->input('title');
-        $content = $request->input('content');
-
-        if (empty($name)) {
-            $name = 'Anonym';
-        }
-
         $ticket = Ticket::create([
-            'user_created' => $name,
-            'title'        => $title,
-            'content'      => $content,
+            'user_created' => Auth::user()->name,
+            'title'        => $request->input('title'),
+            'content'      => $request->input('content'),
+            'priority'     => $request->input('priority'),
         ]);
 
         return redirect(route('show', ['ticket' => $ticket->id]));
     }
 
-    public function delete($id)
+    public function delete($ticketId)
     {
-        $ticket = Ticket::where('id', $id);
+        $ticket = Ticket::where('id', $ticketId);
+
         $ticket->delete();
     }
 
@@ -58,26 +60,13 @@ class TicketController extends Controller
         return view('edit', compact('ticket', 'comments'));
     }
 
-    public function addComment($id)
+    public function storeEditedTicket(Ticket $ticket, Request $request)
     {
-        return view('add_comment', compact('id'));
-    }
+        $ticket->title = $request->input('title');
+        $ticket->priority = $request->input('priority');
+        $ticket->content = $request->input('content');
+        $ticket->save();
 
-    public function storeComment($id, Request $request)
-    {
-        Comments::create([
-            'user_created' => $request->input('author', 'anonym'),
-            'ticket_id'    => $id,
-            'content'      => $request->input('content'),
-        ]);
-
-        return redirect(route('show', ['ticket' => $id]));
-    }
-
-    public function deleteComments($id)
-    {
-        Comments::where('ticket_id', $id)->delete();
-
-        return redirect(route('show', ['ticket' => $id]));
+        return redirect(route('show', ['ticket' => $ticket->id]));
     }
 }

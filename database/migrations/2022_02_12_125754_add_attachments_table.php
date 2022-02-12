@@ -11,7 +11,8 @@ class AddAttachmentsTable extends Migration
         Schema::create('attachments', function (Blueprint $table) {
             $table->id();
             $table->string('user_created');
-            $table->string('ticket_id');
+            $table->string('ticket_id')->nullable();
+            $table->string('comment_id')->nullable();
             $table->string('path');
             $table->softDeletes();
             $table->timestamps();

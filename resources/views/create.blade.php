@@ -19,13 +19,21 @@
 
                 <div class="col padding">
                     <div class="center">
-                        Name des Erstellers
+                        Priorität
                     </div>
                     <div class="center">
-                        <input class="input-text" name="name" type="text">
+                        <select name="priority" id="priority" class="input-text">
+                            <option value="Dringend">Dringend</option>
+                            <option value="Hoch">Hoch</option>
+                            <option value="Normal" selected>Normal</option>
+                            <option value="Niedrig">Niedrig</option>
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
+
+            <hr>
 
             <div class="row padding">
                 Beschreibung <br>

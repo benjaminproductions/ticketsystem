@@ -13,6 +13,7 @@ class AddTicketTable extends Migration
             $table->string('user_created');
             $table->string('title');
             $table->string('content');
+            $table->string('priority');
             $table->softDeletes();
             $table->timestamps();
         });

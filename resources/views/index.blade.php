@@ -1,9 +1,5 @@
 @extends('layout')
 @section('content')
-    <?php
-    use Illuminate\Support\Carbon;
-    ?>
-
     <div class="center">
         @if(!$tickets->isEmpty())
             <table>
@@ -16,6 +12,11 @@
                     <td class="padding" style="width: 200px">
                         <div class="center">
                             <b>Titel</b>
+                        </div>
+                    </td>
+                    <td class="padding" style="width: 200px">
+                        <div class="center">
+                            <b>Priorität</b>
                         </div>
                     </td>
                     <td class="padding" style="width: 200px">
@@ -39,13 +40,16 @@
                         </td>
                         <td class="padding">
                             <div class="center">
-                                {{ Carbon::parse($ticket->created_date)->setTimezone('Europe/Berlin')->format('H:i d.m.Y') }}
+                                {{ $ticket->priority }}
                             </div>
                         </td>
                         <td class="padding">
-                            <a href="{{ $ticket->id }}">
-                                <button type="button" class="btn btn-success">Anzeigen</button>
-                            </a>
+                            <div class="center">
+                                {{ Illuminate\Support\Carbon::parse($ticket->created_date)->setTimezone('Europe/Berlin')->format('H:i d.m.Y') }}
+                            </div>
+                        </td>
+                        <td class="padding center">
+                            <a href="{{ $ticket->id }}" class="btn btn-success btn-sm">Anzeigen</a>
                         </td>
                     </tr>
                 @endforeach

@@ -10,6 +10,18 @@
 </head>
 <body>
 
+@if(!empty(Auth::user()))
+    <div class="padding">
+        Eingelogt als: <b>{{ Auth::user()->name }}</b> <a href="{{ route('login.logout') }}" class="btn btn-danger btn-sm">Logout</a>
+    </div>
+@else
+    <div class="padding">
+        Einlogdaten: <br>
+        Benutzername: <b>Mitarbeiter</b> oder <b>Kunde</b> <br>
+        Passwort: <b>Feuerwehr</b>
+    </div>
+@endif
+
 <div class="center padding">
     <h1>Ticketsystem</h1>
 </div>

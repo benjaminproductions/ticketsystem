@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Comments extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'user_created',
+        'ticket_id',
+        'content',
+    ];
 
-    public $fillable = ['user_created'];
+    public function files()
+    {
+        return $this->hasMany(Attachments::class, 'comment_id', 'id');
+    }
 }

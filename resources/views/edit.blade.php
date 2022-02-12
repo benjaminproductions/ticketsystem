@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
 
-        <form method="POST" action="{{ route('store') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('storeEditedTicket', ['ticket' => $ticket->id]) }}" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col padding">
@@ -19,10 +19,16 @@
 
                 <div class="col padding">
                     <div class="center">
-                        Name des Erstellers
+                        Priorität
                     </div>
                     <div class="center">
-                        <input class="input-text" name="name" type="text" value="{{ $ticket->user_created }}">
+                        <select name="priority" id="priority" class="input-text">
+                            <option value="Dringend">Dringend</option>
+                            <option value="Hoch">Hoch</option>
+                            <option value="Normal" selected>Normal</option>
+                            <option value="Niedrig">Niedrig</option>
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -37,7 +43,9 @@
                     <button type="submit" class="btn btn-success">Speichern</button>
 
                     @if($comments)
-                        <button type="button" class="btn btn-danger" onclick="deleteComments(event)">Alle Kommentare Löschen</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteComments(event)">
+                            Alle Kommentare Löschen
+                        </button>
                     @endif
                 </div>
             </div>
