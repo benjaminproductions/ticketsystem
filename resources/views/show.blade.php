@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    @if(!empty($comments))
+    @if(!empty($comments[0]))
         <br>
         <div class="container">
             <div class="center">
@@ -29,10 +29,10 @@
                 <div class="row">
                     <div class="col-4"></div>
                     <div class="col-3">
-                        <b>{{ $comment['author'] }}</b> schreibt:
+                        <b>{{ $comment->user_created }}</b> schreibt:
                     </div>
                     <div class="col">
-                        {{ $comment['content'] }}
+                        {{ $comment->content }}
                     </div>
                 </div>
             @endforeach

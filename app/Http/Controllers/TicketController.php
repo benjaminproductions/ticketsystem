@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comments;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
-    const COMMENT_PATH = 'comments/';
-
     public function index()
     {
         $tickets = Ticket::get();
@@ -18,14 +16,9 @@ class TicketController extends Controller
 
     public function show(Ticket $ticket)
     {
-        $commentPath = self::COMMENT_PATH . $ticket->id;
-        if (Storage::exists($commentPath)) {
-            $comments = Storage::get($commentPath);
-            $comments = json_decode($comments, true);
-            return view('show', compact('ticket', 'comments'));
-        }
+        $comments = Comments::where('ticket_id', $ticket->id)->get();
 
-        return view('show', compact('ticket'));
+        return view('show', compact('ticket', 'comments'));
     }
 
     public function create()
@@ -60,7 +53,8 @@ class TicketController extends Controller
 
     public function edit(Ticket $ticket)
     {
-        $comments = Storage::exists(self::COMMENT_PATH . $ticket->id);
+        $comments = Comments::where('ticket_id', $ticket->id)->get();
+
         return view('edit', compact('ticket', 'comments'));
     }
 
@@ -71,31 +65,19 @@ class TicketController extends Controller
 
     public function storeComment($id, Request $request)
     {
-        $author = $request->input('author');
-        if (empty($author)) {
-            $author = 'Anonym';
-        }
-        $data = [
-            [
-                'author'  => $author,
-                'content' => $request->input('content'),
-            ],
-        ];
-        $path = self::COMMENT_PATH . $id;
-        if (Storage::exists($path)) {
-            $array = Storage::get($path);
-            $array = json_decode($array, true);
-            $data = array_merge($array, $data);
-        }
-        $data = json_encode($data);
+        Comments::create([
+            'user_created' => $request->input('author', 'anonym'),
+            'ticket_id'    => $id,
+            'content'      => $request->input('content'),
+        ]);
 
-        Storage::put($path, $data);
         return redirect(route('show', ['ticket' => $id]));
     }
 
     public function deleteComments($id)
     {
-        Storage::delete(self::COMMENT_PATH . $id);
+        Comments::where('ticket_id', $id)->delete();
+
         return redirect(route('show', ['ticket' => $id]));
     }
 }
