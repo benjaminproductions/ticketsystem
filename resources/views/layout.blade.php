@@ -12,7 +12,7 @@
 
 @if(!empty(Auth::user()))
     <div class="padding">
-        Eingelogt als: <b>{{ Auth::user()->name }}</b> <a href="{{ route('login.logout') }}" class="btn btn-danger btn-sm">Logout</a>
+        Eingeloggt als: <b>{{ Auth::user()->name }}</b> <a href="{{ route('login.logout') }}" class="btn btn-danger btn-sm">Logout</a>
     </div>
 @else
     <div class="padding">

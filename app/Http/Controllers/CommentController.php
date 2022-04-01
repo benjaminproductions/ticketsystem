@@ -29,7 +29,7 @@ class CommentController extends Controller
     {
         $comments = Comments::where('id', $id);
 
-        Attachments::deleteCommentFiles($id);
+        //Attachments::deleteCommentFiles($id);
 
         $comments->delete();
         return redirect(route('show', ['ticket' => $ticketId]));
