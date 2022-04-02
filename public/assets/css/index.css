@@ -1,0 +1,27 @@
+.btn-show {
+    margin: 0 !important;
+    float: right !important;
+}
+
+.btn-create {
+    margin-top: 3px !important;
+    background-color: #FFFFFF !important;
+    color: #FF4B2B !important;
+    float: right;
+}
+
+.ticket-table {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.table-header {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+td {
+    border-bottom: 1px solid black;
+    padding: 5px;
+}

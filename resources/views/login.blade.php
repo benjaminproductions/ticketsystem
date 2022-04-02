@@ -3,13 +3,17 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ticketsystem @yield('title')</title>
+    <title>Ticketsystem-Login</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/login.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/shared.css') }}"/>
 </head>
 <body>
+@if(!empty(Auth::user()))
+    <script>window.location = "/tcp";</script>
+@endif
 <div class="container">
     <div class="form signUp">
         <form action="#">
@@ -20,9 +24,9 @@
                 <a href="#" class="fa fa-reddit"></a>
             </div>
             <span>or use your email for registration</span>
-            <input type="text" placeholder="Name" />
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
+            <input type="text" placeholder="Name"/>
+            <input type="email" placeholder="Email"/>
+            <input type="password" placeholder="Password"/>
             <button>Sign Up</button>
         </form>
     </div>
@@ -38,12 +42,13 @@
             <span>or use your account details</span>
             <input type="text" placeholder="Name" name="name"/>
             <input type="password" placeholder="Password" name="password"/>
-            <button type="submit">Sign In</button>
+            <button class="btn" type="submit">Sign In</button>
         </form>
     </div>
     <div class="overlay">
         <div class="overlay-inner">
             <div class="overlay-panel overlay-left">
+                @csrf
                 <h1>Welcome Back!</h1>
                 <p>Please log in</p>
                 <button class="ghost" id="signIn">Sign In</button>
@@ -70,25 +75,5 @@
         </div>
     </div>
 </div>
-
-        @if(!empty(Auth::user()))
-            <script>window.location = "/tcp";</script>
-        @endif
-
-        @if(count($errors) > 0)
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        @if(!empty($success))
-            <div class="alert alert-info success-block">
-                <strong>{{ $success }}</strong>
-            </div>
-        @endif
 </body>
 </html>
