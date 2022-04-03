@@ -37,7 +37,7 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         $ticket = Ticket::create([
-            'user_created' => Auth::user()->name,
+            'user_created' => Auth::user()->id,
             'title'        => $request->input('title'),
             'content'      => $request->input('content'),
             'priority'     => $request->input('priority'),

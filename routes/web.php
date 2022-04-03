@@ -26,8 +26,7 @@ Route::prefix('/comment')->group(function () {
 });
 
 Route::prefix('/file')->group(function () {
-    Route::post('/{ticketId}/uploadTicketFile', [FileController::class, 'uploadTicketFile'])->name('file.ticketfile');
-    Route::post('/{commentId}/uploadCommentFile', [FileController::class, 'uploadCommentFile'])->name('file.commentFile');
+    Route::post('/{id}/uploadFile', [FileController::class, 'uploadFile'])->name('file.upload');
     Route::get('/{name}', [FileController::class, 'downloadFile'])->name('file');
     Route::get('/{id}/delete', [FileController::class, 'deleteFile'])->name('file.delete');
 });

@@ -11,7 +11,10 @@
 @section('content')
     <div class="split left">
         <div class="details">
-            <span>Creator<p>{{$ticket->user_created}}</p></span>
+            @php
+                use App\Models\User;
+            @endphp
+            <span>Creator<p>{{ User::where('id', $ticket->user_created)->first()->name }}</p></span>
             <span>Title<p>{{ $ticket->title }}</p></span>
             <span>Priority<p>{{ $ticket->priority }}</p></span>
             <span>Description<p>{{ $ticket->content }}</p></span>
@@ -29,8 +32,7 @@
                 Files
             </div>
             <div class="file-right" style="width: 10%; float: right;">
-                <form method="POST" action="{{ route('file.ticketfile', ['ticketId' => $ticket->id]) }}"
-                      enctype="multipart/form-data">
+                <form method="POST" action="{{ route('file.upload', ['id' => $ticket->id]) }}" enctype="multipart/form-data">
                     @csrf
                     <div class="file-upload">
                         <label for="file-input">
@@ -41,7 +43,7 @@
                             </svg>
                             Add File
                         </label>
-                        <input id="file-input" type="file" name="file" onChange="this.form.submit()">
+                        <input id="file-input" type="file" name="ticket_file" onChange="this.form.submit()">
                     </div>
                 </form>
             </div>
@@ -49,18 +51,23 @@
         @csrf
         <div class="files">
             @if(!empty($ticket->files))
-                <table class="file-table">
-                    @foreach($ticket->files as $file)
-                        <tr>
-                            <td style="width: 100px;"><a
-                                        href="{{ route('file', ['name' => $file->path]) }}"> {{ $file->path }} </a></td>
-                            <td style="width: 200px;"><a href="#" class="btn btn-save"
-                                                         onclick="deleteFile(this)" src="{{ $file->id }}">Delete</a>
-                            </td>
-                            <td style="width: 80%"></td>
-                        </tr>
-                    @endforeach
-                </table>
+            <table class="file-table">
+                @foreach($ticket->files as $file)
+                    <tr>
+                        <td style="width: 100px;">
+                            <a href="{{ route('file', ['name' => $file->path]) }}">
+                                {{ $file->path }}
+                            </a>
+                        </td>
+                        <td style="width: 200px;">
+                            <a href="#" class="btn btn-save" onclick="deleteFile(this)" src="{{ $file->id }}">
+                                Delete
+                            </a>
+                        </td>
+                        <td style="width: 80%"></td>
+                    </tr>
+                @endforeach
+            </table>
             @endif
         </div>
 
@@ -72,11 +79,11 @@
             <table class="comment-table">
                 @foreach($ticket->comments as $comment)
                     <tr>
-                        <td class="comment-user">{{ $comment->user_created }} wrote:</td>
+                        <td class="comment-user">{{ User::where('id', $comment->user_created)->first()->name }} wrote:</td>
                         <td class="comment-content">{{ $comment->content }}</td>
-                        <td class="comment-upload">
+                        {{--<td class="comment-upload">
                             <form method="POST"
-                                  action="{{ route('file.commentFile', ['commentId' => $comment->id]) }}"
+                                  action="{{ route('file.upload', ['id' => $comment->id]) }}"
                                   enctype="multipart/form-data">
                                 @csrf
                                 <div class="file-upload">
@@ -88,10 +95,10 @@
                                         </svg>
                                         Add File
                                     </label>
-                                    <input id="file-input" type="file" name="file" onChange="this.form.submit()">
+                                    <input id="file-input" type="file" name="comment_file" onChange="this.form.submit()">
                                 </div>
                             </form>
-                        </td>
+                        </td> --}}
                         <td class="comment-delete"><a
                                     href="{{ route('deleteComment', ['id' => $comment->id, 'ticketId' => $ticket->id]) }}"
                                     class="btn btn-save">Delete</a></td>
@@ -100,13 +107,18 @@
                         @foreach($comment->files as $file)
                             <tr>
                                 <td></td>
-                                <td style="width: 100px;"><a
-                                            href="{{ route('file', ['name' => $file->path]) }}"> {{ $file->path }} </a>
+                                <td style="width: 100px;">
+                                    <a href="{{ route('file', ['name' => $file->path]) }}">
+                                        {{ $file->path }}
+                                    </a>
                                 </td>
-                                <td style="width: 200px;"><a href="#" class="btn btn-save"
-                                                             onclick="deleteFile(this)"
-                                                             src="{{ $file->id }}">Delete</a></td>
-                                <td style="width: 80%"></td>
+                                <td style="width: 200px;">
+                                    <a href="#" class="btn btn-save" onclick="deleteFile(this)" src="{{ $file->id }}">
+                                        Delete
+                                    </a>
+                                </td>
+                                <td style="width: 80%">
+                                </td>
                             </tr>
                         @endforeach
                     @endif

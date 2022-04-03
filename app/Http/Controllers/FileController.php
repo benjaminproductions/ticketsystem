@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attachments;
-use App\Models\Comments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -11,35 +10,40 @@ use Illuminate\Support\Str;
 
 class FileController extends Controller
 {
-    public function uploadTicketFile(Request $request, $ticketId)
+    public function uploadFile(Request $request, $id)
     {
-        $filePath = Str::random(10) . '.' . $request->file('file')->clientExtension();
-        $request->file('file')->storeAs('', $filePath);
+        dd($request->file());
+        if (! empty($request->hasFile('ticket_file'))) {
+            $file = $request->file('ticket_file');
 
-        Attachments::create([
-            'user_created' => Auth::user()->name,
-            'ticket_id'    => $ticketId,
-            'path'         => $filePath,
-        ]);
+            $fileName = Str::random(10) . '.' . $file->clientExtension();
+            $file->storeAs('', $fileName);
 
-        return redirect(route('show', ['ticket' => $ticketId]));
-    }
+            Attachments::create([
+                'user_created' => Auth::user()->id,
+                'ticket_id'    => $id,
+                'path'         => $fileName,
+            ]);
 
-    public function uploadCommentFile(Request $request, $commentId)
-    {
-        dd($request->file('file'));
-        $filePath = Str::random(10) . '.' . $request->file('file')->clientExtension();
-        $request->file('file')->storeAs('', $filePath);
+            return back();
+        }
 
-        Attachments::create([
-            'user_created' => Auth::user()->name,
-            'comment_id'   => $commentId,
-            'path'         => $filePath,
-        ]);
+        if (! empty($request->hasFile('comment_file'))) {
+            $file = $request->file('comment_file');
 
-        $comment = Comments::where('id', $commentId)->first();
+            $fileName = Str::random(10) . '.' . $file->clientExtension();
+            $file->storeAs('', $fileName);
 
-        return redirect(route('show', ['ticket' => $comment->ticket_id]));
+            Attachments::create([
+                'user_created' => Auth::user()->id,
+                'comment_id'   => $id,
+                'path'         => $fileName,
+            ]);
+
+            return back();
+        }
+
+        return 404;
     }
 
     public function deleteFile($id)
