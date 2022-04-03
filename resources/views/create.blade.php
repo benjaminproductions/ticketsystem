@@ -1,50 +1,45 @@
 @extends('layout')
+
 @section('title')
-    Erstellen
 @endsection
+
+@section('head')
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/create.css') }}"/>
+@endsection
+
 @section('content')
-    <div class="container">
+    <form method="POST" action="{{ route('store') }}" enctype="multipart/form-data">
+        @csrf
 
-        <form method="POST" action="{{ route('store') }}" enctype="multipart/form-data">
-            @csrf
-            <div class="row">
-                <div class="col padding">
-                    <div class="center">
-                        Titel
-                    </div>
-                    <div class="center">
-                        <input class="input-text" name="title" type="text" required>
-                    </div>
-                </div>
 
-                <div class="col padding">
-                    <div class="center">
-                        Priorität
-                    </div>
-                    <div class="center">
-                        <select name="priority" id="priority" class="input-text">
-                            <option value="Dringend">Dringend</option>
-                            <option value="Hoch">Hoch</option>
-                            <option value="Normal" selected>Normal</option>
-                            <option value="Niedrig">Niedrig</option>
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+        <span>Ticket Title<br>
+            <input class="input-text" name="title" type="text" placeholder="Title" required>
+        </span>
 
-            <hr>
 
-            <div class="row padding">
-                Beschreibung <br>
-                <textarea name="content" required></textarea>
-            </div>
+        <span>Ticket Priority <br>
+            <select name="priority" id="priority" class="input-text">
 
-            <div class="row-cols-auto">
-                <div class="center padding">
-                    <button type="submit" class="btn btn-success">Speichern</button>
-                </div>
-            </div>
-        </form>
-    </div>
+                @php
+                    use App\Models\Ticket;
+                @endphp
+
+                @foreach(Ticket::priorityList() as $priority)
+                    <option value="{{ $priority }}" {{ $priority === Ticket::DEFAULT_PRIORITY ? 'selected' : '' }}>{{ $priority }}</option>
+                @endforeach
+
+            </select>
+        </span>
+
+
+        <span>Ticket Description
+            <br>
+            <textarea name="content" placeholder="Describe Your Problem Here..." required></textarea>
+        </span>
+
+        <span>
+            <button type="submit" class="btn btn-save">Save</button>
+            <a href="{{ route('index') }}" class="btn btn-save">Back</a>
+        </span>
+    </form>
 @endsection

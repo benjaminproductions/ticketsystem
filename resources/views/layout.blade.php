@@ -3,30 +3,26 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ticketsystem @yield('title')</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Ticketsystem - @yield('title')</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.css') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/shared.css') }}"/>
+    @yield('head')
 </head>
 <body>
+<div class="container">
+    <div class="header">
+        <span class="header-title">IT 20/1 Ticketsystem</span>
 
-@if(!empty(Auth::user()))
-    <div class="padding">
-        Eingelogt als: <b>{{ Auth::user()->name }}</b> <a href="{{ route('login.logout') }}" class="btn btn-danger btn-sm">Logout</a>
+        @yield('header')
+        <span class="header-logout"><a href="{{ route('login.logout') }}" class="btn btn-logout">Logout</a></span>
     </div>
-@else
-    <div class="padding">
-        Einlogdaten: <br>
-        Benutzername: <b>Mitarbeiter</b> oder <b>Kunde</b> <br>
-        Passwort: <b>Feuerwehr</b>
+    <div class="content">
+        @yield('content')
     </div>
-@endif
-
-<div class="center padding">
-    <h1>Ticketsystem</h1>
+    <div class="footer"><span class="footer-copyright">©IT20/1 (2022)</span></div>
 </div>
-
-@yield('content')
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 @yield('javascript')

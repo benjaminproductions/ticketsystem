@@ -1,0 +1,89 @@
+.split {
+    position: fixed;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.left {
+    left: 5px;
+    width: 20%;
+    text-align: center;
+    overflow-y: hidden;
+    max-height: 100%;
+}
+
+.details {
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.details p {
+    font-weight: normal;
+    text-transform: none;
+    background-color: #eee;
+    margin-left: 15px;
+    width: 90%;
+}
+
+.btn-save {
+    margin-top: 3px !important;
+    float: right;
+}
+
+.details span {
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 5px;
+}
+
+.right {
+    right: 0;
+    width: 75%;
+}
+
+.middle {
+    float: none !important;
+    width: 100% !important;
+    margin-top: 15px !important;
+}
+
+.file-table {
+    width: 100%;
+}
+
+.file-table tr {
+    border-bottom: 1px solid black;
+}
+
+.file-table tr:last-child {
+    border-bottom: none;
+}
+
+.files {
+    height: 50%;
+}
+
+.file-upload > input {
+    display: none;
+}
+
+.file-right:hover {
+    cursor: pointer;
+}
+
+.comment-table {
+    width: 100%;
+}
+
+.comment-delete {
+    width: 10%;
+}
+
+.comment-upload {
+    width: 10%;
+}
+
+.comment-user {
+    width: 15%;
+}

@@ -17,7 +17,7 @@ class CommentController extends Controller
     public function store($id, Request $request)
     {
         Comments::create([
-            'user_created' => Auth::user()->name,
+            'user_created' => Auth::user()->id,
             'ticket_id'    => $id,
             'content'      => $request->input('content'),
         ]);
@@ -28,8 +28,6 @@ class CommentController extends Controller
     public function delete($id, $ticketId)
     {
         $comments = Comments::where('id', $id);
-
-        Attachments::deleteCommentFiles($id);
 
         $comments->delete();
         return redirect(route('show', ['ticket' => $ticketId]));

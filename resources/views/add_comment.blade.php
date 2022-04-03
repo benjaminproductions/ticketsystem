@@ -1,23 +1,19 @@
 @extends('layout')
+
 @section('title')
-    Erstellen
 @endsection
+
+@section('head')
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/create.css') }}"/>
+@endsection
+
 @section('content')
-    <div class="container">
-
-        <form method="POST" action="{{ route('storeComment', ['id' => $id]) }}" enctype="multipart/form-data">
-            @csrf
-
-            <div class="row padding">
-                Kommentar beschreibung <br>
-                <textarea name="content" required></textarea>
-            </div>
-
-            <div class="row-cols-auto">
-                <div class="center padding">
-                    <button type="submit" class="btn btn-success">Speichern</button>
-                </div>
-            </div>
-        </form>
-    </div>
+    <form method="POST" action="{{ route('storeComment', ['id' => $id]) }}" enctype="multipart/form-data">
+        @csrf
+        <span>Comment<br><textarea name="content" placeholder="What Do You Want To Say?" required></textarea></span>
+        <span>
+                <button type="submit" class="btn btn-save">Save</button>
+                <a href="{{ route('index') }}" class="btn btn-save">Back</a>
+            </span>
+    </form>
 @endsection

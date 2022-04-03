@@ -1,56 +1,37 @@
 @extends('layout')
+
 @section('title')
-    Bearbeiten
+    Edit
 @endsection
+
+@section('head')
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/create.css') }}"/>
+@endsection
+
 @section('content')
-    <div class="container">
-
-        <form method="POST" action="{{ route('storeEditedTicket', ['ticket' => $ticket->id]) }}" enctype="multipart/form-data">
-            @csrf
-            <div class="row">
-                <div class="col padding">
-                    <div class="center">
-                        Titel
-                    </div>
-                    <div class="center">
-                        <input class="input-text" name="title" type="text" value="{{ $ticket->title }}" required>
-                    </div>
-                </div>
-
-                <div class="col padding">
-                    <div class="center">
-                        Priorität
-                    </div>
-                    <div class="center">
-                        <select name="priority" id="priority" class="input-text">
-                            <option value="Dringend">Dringend</option>
-                            <option value="Hoch">Hoch</option>
-                            <option value="Normal" selected>Normal</option>
-                            <option value="Niedrig">Niedrig</option>
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row padding">
-                Beschreibung <br>
-                <textarea name="content" required>{{ $ticket->content }}</textarea>
-            </div>
-
-            <div class="row-cols-auto">
-                <div class="center padding">
-                    <button type="submit" class="btn btn-success">Speichern</button>
-
-                    @if($comments)
-                        <button type="button" class="btn btn-danger" onclick="deleteComments(event)">
-                            Alle Kommentare Löschen
+    <form method="POST" action="{{ route('storeEditedTicket', ['ticket' => $ticket->id]) }}"
+          enctype="multipart/form-data">
+        @csrf
+        <span>Ticket Title <br><input class="input-text" name="title" type="text" placeholder="Title"
+                                      value="{{ $ticket->title }}" required></span>
+        <span>Ticket Priority <br><select name="priority" id="priority" class="input-text">
+                    <option value="Urgent" {{ $ticket->priority == "Urgent" ? 'selected' : '' }}>Urgent</option>
+                    <option value="High" {{ $ticket->priority == "High" ? 'selected' : '' }}>High</option>
+                    <option value="Normal" {{ $ticket->priority == "Normal" ? 'selected' : '' }}>Normal</option>
+                    <option value="Low" {{ $ticket->priority == "Low" ? 'selected' : '' }}>Low</option>
+            </select></span>
+        <span>Ticket Description<br><textarea name="content" placeholder="Describe Your Problem Here..."
+                                              required>{{ $ticket->content }}</textarea></span>
+        <span>
+                <button type="submit" class="btn btn-save">Save</button>
+                @if($comments)
+                <button type="button" class="btn btn-save" onclick="deleteComments(event)">
+                            Delete All Comments
                         </button>
-                    @endif
-                </div>
-            </div>
-        </form>
-    </div>
+            @endif
+                <a href="{{ route('index') }}" class="btn btn-save">Back</a>
+            </span>
+    </form>
 @endsection
 
 @section('javascript')

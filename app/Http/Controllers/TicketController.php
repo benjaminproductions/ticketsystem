@@ -37,7 +37,7 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         $ticket = Ticket::create([
-            'user_created' => Auth::user()->name,
+            'user_created' => Auth::user()->id,
             'title'        => $request->input('title'),
             'content'      => $request->input('content'),
             'priority'     => $request->input('priority'),
@@ -46,10 +46,8 @@ class TicketController extends Controller
         return redirect(route('show', ['ticket' => $ticket->id]));
     }
 
-    public function delete($ticketId)
+    public function delete(Ticket $ticket)
     {
-        $ticket = Ticket::where('id', $ticketId);
-
         $ticket->delete();
     }
 
