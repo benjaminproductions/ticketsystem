@@ -14,7 +14,7 @@ Route::get('/', [TicketController::class, 'index'])->name('index');
 Route::get('/create', [TicketController::class, 'create'])->name('create');
 Route::post('/store', [TicketController::class, 'store'])->name('store');
 Route::get('/{ticket}', [TicketController::class, 'show'])->name('show');
-Route::get('/{ticketId}/delete/', [TicketController::class, 'delete'])->name('delete');
+Route::get('/{ticket}/delete/', [TicketController::class, 'delete'])->name('delete');
 Route::get('/{ticket}/edit', [TicketController::class, 'edit'])->name('edit');
 Route::any('/{ticket}/edit/store', [TicketController::class, 'storeEditedTicket'])->name('storeEditedTicket');
 
@@ -27,7 +27,7 @@ Route::prefix('/comment')->group(function () {
 
 Route::prefix('/file')->group(function () {
     Route::post('/{ticketId}/uploadTicketFile', [FileController::class, 'uploadTicketFile'])->name('file.ticketfile');
-    Route::post('/{commentId}/uploadCommentFile', [FileController::class, 'uploadCommentFile'])->name('file.commentfile');
+    Route::post('/{commentId}/uploadCommentFile', [FileController::class, 'uploadCommentFile'])->name('file.commentFile');
     Route::get('/{name}', [FileController::class, 'downloadFile'])->name('file');
     Route::get('/{id}/delete', [FileController::class, 'deleteFile'])->name('file.delete');
 });

@@ -11,48 +11,29 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/shared.css') }}"/>
 </head>
 <body>
-@if(!empty(Auth::user()))
-    <script>window.location = "/tcp";</script>
-@endif
+
 <div class="container">
-    <div class="form signUp">
-        <form action="#">
-            <h1>Create Account</h1>
-            <div class="socials">
-                <a href="#" class="fa fa-facebook"></a>
-                <a href="#" class="fa fa-google"></a>
-                <a href="#" class="fa fa-reddit"></a>
-            </div>
-            <span>or use your email for registration</span>
-            <input type="text" placeholder="Name"/>
-            <input type="email" placeholder="Email"/>
-            <input type="password" placeholder="Password"/>
-            <button>Sign Up</button>
-        </form>
-    </div>
     <div class="form signIn">
         <form method="POST" action="{{ route('login.checkLogin') }}" enctype="multipart/form-data">
             @csrf
             <h1>Sign in</h1>
-            <div class="socials">
-                <a href="#" class="fa fa-facebook"></a>
-                <a href="#" class="fa fa-google"></a>
-                <a href="#" class="fa fa-reddit"></a>
-            </div>
-            <span>or use your account details</span>
+
+            <br>
+
+            @if(Session::has('error'))
+                <div class="alert alert-danger" style="width: 100%">
+                    {{ Session::get('error') }}
+                </div>
+            @endif
+
             <input type="text" placeholder="Name" name="name"/>
             <input type="password" placeholder="Password" name="password"/>
+
             <button class="btn" type="submit">Sign In</button>
         </form>
     </div>
     <div class="overlay">
         <div class="overlay-inner">
-            <div class="overlay-panel overlay-left">
-                @csrf
-                <h1>Welcome Back!</h1>
-                <p>Please log in</p>
-                <button class="ghost" id="signIn">Sign In</button>
-            </div>
             <div class="overlay-panel overlay-right">
                 <h1>What's Up?</h1>
                 <h2>To Use The Ticket System, Simply Use One Of Those Login-Details:</h2>

@@ -27,6 +27,7 @@ class FileController extends Controller
 
     public function uploadCommentFile(Request $request, $commentId)
     {
+        dd($request->file('file'));
         $filePath = Str::random(10) . '.' . $request->file('file')->clientExtension();
         $request->file('file')->storeAs('', $filePath);
 

@@ -46,10 +46,8 @@ class TicketController extends Controller
         return redirect(route('show', ['ticket' => $ticket->id]));
     }
 
-    public function delete($ticketId)
+    public function delete(Ticket $ticket)
     {
-        $ticket = Ticket::where('id', $ticketId);
-
         $ticket->delete();
     }
 
