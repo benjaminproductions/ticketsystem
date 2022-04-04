@@ -12,7 +12,6 @@ class FileController extends Controller
 {
     public function uploadFile(Request $request, $id)
     {
-        dd($request->file());
         if (! empty($request->hasFile('ticket_file'))) {
             $file = $request->file('ticket_file');
 
