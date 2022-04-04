@@ -11,10 +11,7 @@
 @section('content')
     <div class="split left">
         <div class="details">
-            @php
-                use App\Models\User;
-            @endphp
-            <span>Creator<p>{{ User::where('id', $ticket->user_created)->first()->name }}</p></span>
+            <span>Creator<p>{{ App\Models\User::where('id', $ticket->user_created)->first()->name }}</p></span>
             <span>Title<p>{{ $ticket->title }}</p></span>
             <span>Priority<p>{{ $ticket->priority }}</p></span>
             <span>Description<p>{{ $ticket->content }}</p></span>
@@ -79,7 +76,7 @@
             <table class="comment-table">
                 @foreach($ticket->comments as $comment)
                     <tr>
-                        <td class="comment-user">{{ User::where('id', $comment->user_created)->first()->name }} wrote:</td>
+                        <td class="comment-user">{{ App\Models\User::where('id', $comment->user_created)->first()->name }} wrote:</td>
                         <td class="comment-content">{{ $comment->content }}</td>
                         {{--<td class="comment-upload">
                             <form method="POST"

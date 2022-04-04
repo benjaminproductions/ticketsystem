@@ -20,12 +20,8 @@
         <span>Ticket Priority <br>
             <select name="priority" id="priority" class="input-text">
 
-                @php
-                    use App\Models\Ticket;
-                @endphp
-
-                @foreach(Ticket::priorityList() as $priority)
-                    <option value="{{ $priority }}" {{ $priority === Ticket::DEFAULT_PRIORITY ? 'selected' : '' }}>{{ $priority }}</option>
+                @foreach(App\Models\Ticket::priorityList() as $priority)
+                    <option value="{{ $priority }}" {{ $priority === App\Models\Ticket::DEFAULT_PRIORITY ? 'selected' : '' }}>{{ $priority }}</option>
                 @endforeach
 
             </select>
