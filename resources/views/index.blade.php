@@ -13,6 +13,10 @@
 @endsection
 
 @section('content')
+    @php
+        use App\Models\User;
+    @endphp
+
     @if(!$tickets->isEmpty())
         <table class="ticket-table">
             <tr class="table-header">
@@ -24,7 +28,7 @@
             </tr>
             @foreach($tickets as $ticket)
                 <tr>
-                    <td>{{ $ticket->user_created }}</td>
+                    <span>Creator<p>{{ User::where('id', $ticket->user_created)->first()->name }}</p></span>
                     <td>{{ $ticket->title }}</td>
                     <td>{{ $ticket->priority }}</td>
                     <td>{{ Illuminate\Support\Carbon::parse($ticket->created_date)->setTimezone('Europe/Berlin')->format('d.m.Y H:i') }}</td>
